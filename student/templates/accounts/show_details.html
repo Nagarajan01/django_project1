@@ -1,30 +1,30 @@
 <center>
-<h1>Student Details</h1>
-<table border = '1'>
-<tr>
-<th>ID</th>
-<th>Roll_number</th>
-<th>Name</th>
-<th>Image</th>
-<th>View_mark</th>
-<th>Update</th>
-</tr>
-{% for i in form %}
-<tr>
-<td>{{i.id}}</td>
-<td>{{i.name}}</td>
-<td>{{i.roll_number}}</td>
-<td><img src="{{i.upload.url}}", width = 100px ></td><!--
-<td><img src="{{ i.profile.url }}", width = 100px ></td>
-<td><button><a href = show_mark/{{i.id}}>marks</a></button></td>
-<td><button><a href = update_stu/{{i.id}}>update</a></button></td>
-<td><button><a href = del_stu/{{i.id}}>delete</a></button></td>-->
-</tr>
-{% endfor %}
-</table>
-<button><a href = "add_form/">add_student</a></button>
-<!--
-<br>
-<button><a href = http://127.0.0.1:8000/student/students>add_student</a></button>
-<button><a href = http://127.0.0.1:8000/student/marks>add marks</a></button>
-</center>-->
+    <h1>Student Details</h1>
+    <table border='1'>
+        <tr>
+            <th>ID</th>
+            <th>Roll_number</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>update_student</th>
+            <th>View_mark</th>
+            <th>add_mark</th>
+        </tr>
+        {% for i in form %}
+        <tr>
+            <td>{{i.id}}</td>
+            <td>{{i.name}}</td>
+            <td>{{i.roll_number}}</td>
+            <td><img src="{{i.upload.url}}" , width=100px></td>
+            <td><button><a href=update_student/{{i.id}}>update_student</a></td>
+            <td><button><a href=show_marks/{{i.id}}>show_mark</a></button></td>
+            <td><button><a href=add_marks>add_mark</a></button></td>
+
+
+        </tr>
+        {% endfor %}
+    </table>
+
+    <button><a href="add_form/">add_student</a></button>
+
+    <td><button><a href=logout>logout</a></button></td>
