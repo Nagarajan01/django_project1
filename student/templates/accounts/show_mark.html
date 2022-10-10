@@ -1,0 +1,24 @@
+<table border='1'>
+    <tr>
+        <th>Roll_number</th>
+        <th>subject</th>
+        <th>mark</th>
+        <th>Created_at</th>
+        <th>Modified_at</th>
+        <th>updated_by</th>
+        <th>created_by</th>
+        <th>update_mark</th>
+    </tr>
+    {% for i in mar %}
+    <tr>
+        <td>{{i.roll_no_id}}</td>
+        <td>{{i.subject}}</td>
+        <td>{{i.mark}}</td>
+        <td>{{i.Created_at}}</td>
+        <td>{{i.Modified_at}}</td>
+        <td>{{i.updated_by}}</td>
+        <td>{{i.created_by}}</td>
+        <td><button><a href=update_marks/{{i.id}}>update_mark</a></button></td>
+
+    </tr>
+    {% endfor %}
