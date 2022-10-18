@@ -153,7 +153,7 @@ def json_view(request, id):
     return HttpResponse(data, content_type="application/json")
 
 
-'''class api_list(ListView):
+class api_list(ListView):
     model = Student_detail  
     def render_to_response(self, context, *args, **kwargs):
         detail_Mark_json = Mark.objects.filter(roll_no__roll_number=1).annotate().values()
@@ -167,9 +167,9 @@ def json_view(request, id):
         #queryset = Student_detail.objects.all()
         #data = serializers.serialize('json', all_json , indent=4)
         #return HttpResponse(context)
-        return HttpResponse(data, content_type='application/json')'''
+        return HttpResponse(data, content_type='application/json')
 
-
+'''
 class api_list(ListView):
 
     model = Student_detail
@@ -203,3 +203,4 @@ class api_list(ListView):
         })
         print(context)
         return HttpResponse(context, content_type='application/json')
+'''
