@@ -1,10 +1,15 @@
+from django.views.generic.list import ListView
+from django.views.generic import DetailView
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from django.core import serializers
+
 
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum, Count
 
 # Create your views here.
 from .models import *
@@ -112,9 +117,89 @@ def update_student(request, id):
     return render(request, 'accounts/add_mark.html', {'data': form})
 
 
-def json_view(request):
-    student_json = Mark.objects.all().values()
-    student_data = list(student_json)
-    data = json.dumps(student_data, default=str, indent=1)
+def json_view(request, id):
+
+    detail_Mark_json = Mark.objects.filter(
+        roll_no__roll_number=id).annotate().values()
+    #student_json = Student_detail.objects.all().values()
+    student_json = Student_detail.objects.filter(id=id).values()
+    Mark_json = Mark.objects.filter(
+        roll_no__roll_number=id).aggregate(Sum('mark')).values()
+    mydict = {}
+    mydict['Total_Mark'] = tuple(Mark_json)
+    my_json = json.dumps(list(mydict))
+    print(mydict)
+    all_json = list(student_json) + list(detail_Mark_json) + list([mydict])
+    #all_json = list([Mark_json] , [student_json])
+    print(all_json)
+    data = json.dumps(all_json, default=str, indent=1)
     print(type(data))
     return HttpResponse(data, content_type="application/json")
+
+
+def json_view(request, id):
+    detail_Mark_json = Mark.objects.filter(
+        roll_no__roll_number=id).annotate().values()
+    student_json = Student_detail.objects.filter(id=id).values()
+    Mark_json = Mark.objects.filter(
+        roll_no__roll_number=id).aggregate(Sum('mark')).values()
+    mydict = {}
+    mydict['Total_Mark'] = tuple(Mark_json)
+    print(mydict)
+    all_json = list(student_json) + list(detail_Mark_json) + list([mydict])
+    print(all_json)
+    data = json.dumps(all_json, default=str, indent=1)
+    print(type(data))
+    return HttpResponse(data, content_type="application/json")
+
+
+'''class api_list(ListView):
+    model = Student_detail  
+    def render_to_response(self, context, *args, **kwargs):
+        detail_Mark_json = Mark.objects.filter(roll_no__roll_number=1).annotate().values()
+        student_json = Student_detail.objects.filter(id=1).values()
+        Mark_json = Mark.objects.filter(roll_no__roll_number=1).aggregate(Sum('mark'))
+        all_json = list(student_json) + list(detail_Mark_json) + list([Mark_json])
+        print(type(all_json))
+        data = json.dumps(all_json, default=str, indent=1)
+        print(type(data))
+        print(context)
+        #queryset = Student_detail.objects.all()
+        #data = serializers.serialize('json', all_json , indent=4)
+        #return HttpResponse(context)
+        return HttpResponse(data, content_type='application/json')'''
+
+
+class api_list(ListView):
+
+    model = Student_detail
+
+    def get(self, request, id,  *args, **kwargs):
+        detail_Mark_json = Mark.objects.filter(
+            roll_no__roll_number=1).annotate().values()
+        student_json = Student_detail.objects.filter(id=1).values()
+        Mark_json = Mark.objects.filter(
+            roll_no__roll_number=1).aggregate(Sum('mark'))
+        all_json = list(student_json) + \
+            list(detail_Mark_json) + list([Mark_json])
+        print(type(all_json))
+        data = json.dumps(all_json, default=str, indent=1)
+        print(type(data))
+        # print(context)
+        #queryset = Student_detail.objects.all()
+        #data = serializers.serialize('json', all_json , indent=4)
+        # return HttpResponse(context)
+        return HttpResponse(data, content_type='application/json')
+
+
+class api_list(ListView):
+    model = Student_detail
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(api_list, self).get_context_data(**kwargs)
+        context.update({
+            'character_universe_list': 'dsafa',
+            'more_context': 'bsdgfs',
+        })
+        print(context)
+        return HttpResponse(context, content_type='application/json')
