@@ -14,7 +14,7 @@ class CreateUserForm(UserCreationForm):
 class Student_form(ModelForm):
 	class Meta:
 		model = Student_detail
-		fields = ['name', 'roll_number', 'upload']
+		fields = ['name', 'roll_number', 'email', 'upload']
 
 class Add_mark_form(ModelForm):
 	class Meta:

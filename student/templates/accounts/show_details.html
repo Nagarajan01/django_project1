@@ -6,6 +6,7 @@
             <th>Roll_number</th>
             <th>Name</th>
             <th>Image</th>
+            <th>email   </th>
             <th>update_student</th>
             <th>View_mark</th>
             <th>add_mark</th>
@@ -16,6 +17,7 @@
             <td>{{i.name}}</td>
             <td>{{i.roll_number}}</td>
             <td><img src="{{i.upload.url}}" , width=100px></td>
+            <th>{{i.email}}</th>
             <td><button><a href=update_student/{{i.id}}>update_student</a></td>
             <td><button><a href=show_marks/{{i.id}}>show_mark</a></button></td>
             <td><button><a href=add_marks>add_mark</a></button></td>
